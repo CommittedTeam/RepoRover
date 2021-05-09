@@ -8,5 +8,3 @@ def collect(path,save=None):
     if save:
         commit_data.to_feather(save)
     return (commit_data)
-
-collect("https://github.com/GatorEducator/gatorgrader")
