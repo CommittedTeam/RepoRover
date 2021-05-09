@@ -1,3 +1,4 @@
+from pydriller import RepositoryMining
 import os
 import pandas as pd
 import re

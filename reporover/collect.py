@@ -1,10 +1,12 @@
-from pydriller import RepositoryMining
-from reporover import collect
+from reporover import parse
+import pandas as pd
 
 def collect(path,save=None):
     """Path can take only one repo as well as list of repos"""
-    commit_data = pd.DataFrame(get_commit_data(path))   
+    commit_data = pd.DataFrame(parse.get_commit_data(path))   
     print(commit_data)
-    if path:
+    if save:
         commit_data.to_feather(save)
     return (commit_data)
+
+collect("https://github.com/GatorEducator/gatorgrader")
