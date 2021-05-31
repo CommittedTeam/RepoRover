@@ -1,5 +1,5 @@
 import pytest
-from generate_type import commit_data as cd
+from reporover import get_commit_data as cd
 
 @pytest.mark.parametrize(
     "input_message,expected_type",
@@ -44,8 +44,8 @@ def test_get_file_extensions(input_list, expected_output):
 )
 def test_test_files(input_list, expected_output):
     """Chack that test_files counts test files correctly."""
-    ratio = cd.test_files(input_list)
-    assert expected_output == ratio
+    count = cd.test_files(input_list)
+    assert expected_output == count
 
 
 @pytest.mark.parametrize(
@@ -60,3 +60,16 @@ def test_get_subject_line(input_list, expected_output):
     """Chack that test_files_ratio gives the ratio correctly."""
     subject = cd.get_subject_line(input_list)
     assert expected_output == subject
+
+@pytest.mark.parametrize(
+    "input_tuple,expected_output",
+    [
+     (("allcontributors[bot]","allcontributors[bot]@users.noreply.github.com"),True),
+     (("bagashvilit","bagashvilit@allegheny.edu"),False)
+    ],
+)
+def test_isbot(input_tuple, expected_output):
+    """Chack that bots are detected correctly."""
+    print(input_tuple)
+    boolean = cd.isbot(input_tuple[0],input_tuple[1])
+    assert expected_output == boolean

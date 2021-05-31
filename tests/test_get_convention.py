@@ -1,6 +1,6 @@
 import pytest
 
-from generate_type import detect_type as dp
+from reporover import get_convention
 
 @pytest.mark.parametrize(
     "input_commits,expected_conventions",
@@ -26,29 +26,5 @@ from generate_type import detect_type as dp
 )
 def test_match(input_commits, expected_conventions):
     """Check that match returns correct convention."""
-    conventions = dp.match(input_commits)
+    conventions = get_convention.match(input_commits)
     assert conventions == expected_conventions
-
-@pytest.mark.parametrize(
-    "input_matches,expected_convention",
-    [
-      (["refactor: code","feat: add new functionality","test: add new tests","Update: dependencies"], ("angular",0.75)),
-      (["undefined","undefined","Update: dependencies","Chore: add packages"],("undefined|eslint",0.5)),
-    ]
-)
-def test_get_ratio(input_matches, expected_convention):
-    conventions = dp.get_ratio(input_matches)
-    assert conventions == expected_convention 
-
-
-@pytest.mark.parametrize(
-    "input_url,expected_path",
-    [
-      ("https://github.com/GatorEducator/gatorgrader", "GatorEducator/gatorgrader"),
-      ("https://github.com/CommittedTeam/CommitCanvas","CommittedTeam/CommitCanvas"),
-      ("https://github.com/rust-lang/rust", "rust-lang/rust")
-    ]
-)
-def test_get_repo_path(input_url, expected_path):
-    path = dp.get_repo_path(input_url)
-    assert path == expected_path 

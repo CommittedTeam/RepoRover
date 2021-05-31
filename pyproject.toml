@@ -11,6 +11,7 @@ PyDriller = "^1.15.5"
 PyGithub = "^1.55"
 giturlparse = "^0.10.0"
 pyarrow = "^4.0.0"
+typer = "^0.3.2"
 
 [tool.poetry.dev-dependencies]
 
