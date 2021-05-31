@@ -65,7 +65,8 @@ def test_get_subject_line(input_list, expected_output):
     "input_tuple,expected_output",
     [
      (("allcontributors[bot]","allcontributors[bot]@users.noreply.github.com"),True),
-     (("bagashvilit","bagashvilit@allegheny.edu"),False)
+     (("bagashvilit","bagashvilit@allegheny.edu"),False),
+     (("botname","botname@allegheny.edu"),False)
     ],
 )
 def test_isbot(input_tuple, expected_output):
