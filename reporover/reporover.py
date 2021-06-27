@@ -1,5 +1,5 @@
-import get_commit_data
-import get_convention
+from reporover import get_commit_data
+from reporover import get_convention
 import pandas as pd
 import collections
 from pydriller import RepositoryMining
