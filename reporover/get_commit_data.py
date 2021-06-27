@@ -47,4 +47,12 @@ def test_files(paths):
     test_files_count = len([path for path in paths if "test" in path.lower()])
     return test_files_count
 
+def get_ratio(numerator,denominator):
+    ratio = 0
+    try:
+        return(numerator/denominator) 
+    except:
+        ratio
+
+
 

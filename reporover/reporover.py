@@ -61,6 +61,7 @@ def collect(path, save=None):
                 "file_paths": file_paths,
                 "num_files": commit.files,
                 "test_files": test_files_count,
+                "test_files_ratio": get_commit_data.get_ratio(test_files_count,commit.files),
                 "unique_file_extensions": file_extensions,
                 "num_unique_file_extensions": len(file_extensions),
                 "num_lines_added": commit.insertions,
@@ -75,6 +76,3 @@ def collect(path, save=None):
     if save:
         commit_data.to_feather(save)
     return commit_data
-
-
-print(collect("https://github.com/CommittedTeam/commitcanvas-models"))
