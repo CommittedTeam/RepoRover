@@ -16,9 +16,9 @@ import re
 def match(commit_msg):
     """Detremine which convention commit message is follwing"""
     # The regular expressions are adapted from https://github.com/conventional-changelog/conventional-commits-detector
-    # Angular and eslint specify that commit tags must be one of the following
+    # Angular specifies the acceptable types here: https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit and https://github.com/angular/angular/blob/master/CONTRIBUTING.md
     commit_types = {
-
+        # TODO: add urls
         "angular": "build|ci|docs|feat|fix|perf|refactor|test|chore|style",
         "eslint": "Fix|Update|New|Breaking|Docs|Build|Upgrade|Chore",
 

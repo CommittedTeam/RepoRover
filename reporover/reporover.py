@@ -3,21 +3,28 @@ from reporover import get_convention
 import pandas as pd
 import collections
 from pydriller import RepositoryMining
+import typer
 
+app = typer.Typer()
+
+@app.command()
 def convention(path):
     """Get counts of conventions in the given repo"""
     conventions = []
     # set order to reverse so that we get the newest commits first
-    for commit in RepositoryMining(path).traverse_commits():
+    for commit in RepositoryMining(path,reversed_order=True).traverse_commits():
         conventions.append(get_convention.match(commit.msg))
     convention_count = dict(collections.Counter(conventions))
     return convention_count
 
+@app.command()
 def collect(path, save=None):
     """Collect the commit data with pydriller."""
     commits_info = []
 
-    for commit in RepositoryMining(path).traverse_commits():
+    # TODO Pass in reversed to reverese the commits
+
+    for commit in RepositoryMining(path,reversed_order=True).traverse_commits():
         commit_type = get_commit_data.get_commit_types(commit.msg.lower())
         # skip commits that do not follow conventional commit types syntax
         if commit_type is not None:
