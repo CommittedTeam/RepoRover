@@ -1,0 +1,25 @@
+index:  665
+name:  gatorgrader
+commit_hash:  2aa58c2eadd3645d0cbfa263351920ee9510ae73
+commit_subject:  Remove a not-needed import from the test_check_ConfirmFileExists.
+isbot:  False
+file_paths:  ['tests/checks/test_check_ConfirmFileExists.py']
+num_files:  1
+test_files:  1
+test_files_ratio:  1.0
+unique_file_extensions:  ['.py']
+num_unique_file_extensions:  1
+num_lines_added:  0
+num_lines_removed:  1
+num_lines_total:  1
+
+
+diff of tests/checks/test_check_ConfirmFileExists.py:
+@@ -8,7 +8,6 @@ from unittest.mock import patch
+ 
+ 
+ from gator import arguments
+-from gator import checkers
+ from gator import report
+ from gator.checks import check_ConfirmFileExists
+ 

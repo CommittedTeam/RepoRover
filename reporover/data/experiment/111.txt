@@ -1,0 +1,33 @@
+index:  111
+name:  gatorgrader
+commit_hash:  f61645bdf88299e6989299c5221aff40b51f510b
+commit_subject:  Run xenon on the gator module in the lint.bat file.
+isbot:  False
+file_paths:  ['scripts/lint.bat']
+num_files:  1
+test_files:  0
+test_files_ratio:  0.0
+unique_file_extensions:  ['.bat']
+num_unique_file_extensions:  1
+num_lines_added:  9
+num_lines_removed:  0
+num_lines_total:  9
+
+
+diff of scripts/lint.bat:
+@@ -67,6 +67,15 @@ if ERRORLEVEL 1 (
+     echo -- Passed
+ )
+ 
++echo -- Running xenon
++pipenv run xenon --max-absolute D --max-modules B --max-average A gator
++if ERRORLEVEL 1 (
++    echo -- Failed
++    set PASSED=false
++) else (
++    echo -- Passed
++)
++
+ if "%PASSED%"=="true" (
+     exit /b 0
+ ) else (

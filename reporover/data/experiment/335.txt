@@ -1,0 +1,31 @@
+index:  335
+name:  gatorgrader
+commit_hash:  a4695603d44030490b71db394b101dc2c9f85c48
+commit_subject:  Add a test to test_check_CountCommits for correct arguments.
+isbot:  False
+file_paths:  ['tests/checks/test_check_CountCommits.py']
+num_files:  1
+test_files:  1
+test_files_ratio:  1.0
+unique_file_extensions:  ['.py']
+num_unique_file_extensions:  1
+num_lines_added:  10
+num_lines_removed:  0
+num_lines_total:  10
+
+
+diff of tests/checks/test_check_CountCommits.py:
+@@ -35,3 +35,13 @@ def test_optional_commandline_arguments_cannot_verify(commandline_arguments, cap
+     assert "usage:" in captured.err
+     counted_newlines = captured.err.count("\n")
+     assert counted_newlines == 2
++
++
++@pytest.mark.parametrize(
++    "commandline_arguments",
++    [(["--count", "5"]), (["--count", "5", "--exact"])],
++)
++def test_optional_commandline_arguments_can_verify(commandline_arguments, not_raises):
++    """Check that correct optional command-line arguments check correctly."""
++    with not_raises(SystemExit):
++        _ = check_CountCommits.parse(commandline_arguments)

@@ -1,0 +1,34 @@
+index:  428
+name:  gatorgrader
+commit_hash:  06587a70eb0451303f93d79ac768c174b20b26a1
+commit_subject:  Add test_reminder_produce_output_line_count in test_display.
+isbot:  False
+file_paths:  ['tests/test_display.py']
+num_files:  1
+test_files:  1
+test_files_ratio:  1.0
+unique_file_extensions:  ['.py']
+num_unique_file_extensions:  1
+num_lines_added:  10
+num_lines_removed:  0
+num_lines_total:  10
+
+
+diff of tests/test_display.py:
+@@ -33,6 +33,16 @@ def test_dislay_invalid_produce_output_line_count(capsys):
+     assert captured.err == ""
+ 
+ 
++def test_reminder_produce_output_line_count(capsys):
++    """Check that the help reminder function produces output lines."""
++    display.help_reminder()
++    captured = capsys.readouterr()
++    counted_newlines = captured.out.count("\n")
++    assert "--help" in captured.out
++    assert counted_newlines == 2
++    assert captured.err == ""
++
++
+ def test_display_message_with_newline(capsys):
+     """Check that the message function produces output lines."""
+     display.message("Example message")

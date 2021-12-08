@@ -1,0 +1,33 @@
+index:  502
+name:  gatorgrader
+commit_hash:  5f70e8aac0d117992d97d0fab62c6881e707ccb6
+commit_subject:  Reformat the test_check_CountFileWords.
+isbot:  False
+file_paths:  ['tests/checks/test_check_CountFileWords.py']
+num_files:  1
+test_files:  1
+test_files_ratio:  1.0
+unique_file_extensions:  ['.py']
+num_unique_file_extensions:  1
+num_lines_added:  7
+num_lines_removed:  2
+num_lines_total:  9
+
+
+diff of tests/checks/test_check_CountFileWords.py:
+@@ -165,8 +165,13 @@ def test_act_produces_output(
+     testargs = [os.getcwd()]
+     with patch.object(sys, "argv", testargs):
+         new_file = tmpdir.mkdir(containing_directory).join(chosen_file)
+-        new_file.write("paragraph one \n\n paragraph two two \n\n paragraph three three three")
+-        assert new_file.read() == "paragraph one \n\n paragraph two two \n\n paragraph three three three"
++        new_file.write(
++            "paragraph one \n\n paragraph two two \n\n paragraph three three three"
++        )
++        assert (
++            new_file.read()
++            == "paragraph one \n\n paragraph two two \n\n paragraph three three three"
++        )
+         assert len(tmpdir.listdir()) == 1
+         overall_directory = (
+             tmpdir.dirname + "/" + tmpdir.basename + "/" + containing_directory

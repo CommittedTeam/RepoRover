@@ -1,0 +1,214 @@
+index:  563
+name:  gatorgrader
+commit_hash:  795136b2825274afae19d4dfd64c9af97e2fd210
+commit_subject:  Reformat five source code files related to recent fix.
+isbot:  False
+file_paths:  ['gator/invoke.py' 'gator/markdown.py'
+ 'tests/checks/test_check_CountMarkdownTags.py' 'tests/test_invoke.py'
+ 'tests/test_markdown.py']
+num_files:  5
+test_files:  3
+test_files_ratio:  0.6
+unique_file_extensions:  ['.py']
+num_unique_file_extensions:  1
+num_lines_added:  64
+num_lines_removed:  17
+num_lines_total:  81
+
+
+diff of gator/invoke.py:
+@@ -603,7 +603,10 @@ def invoke_all_markdown_checks(
+     met_or_exceeded_count = 0
+     # perform the count, saving the details in a way that preserves information if the
+     # filecheck was given as a wildcard (i.e., "*.py")
+-    (met_or_exceeded_count, actual_count), count_dictionary = markdown.specified_tag_greater_than_count(
++    (
++        met_or_exceeded_count,
++        actual_count,
++    ), count_dictionary = markdown.specified_tag_greater_than_count(
+         markdown_tag,
+         markdown.count_specified_tag,
+         expected_count,
+
+
+diff of gator/markdown.py:
+@@ -49,4 +49,7 @@ def specified_tag_greater_than_count(
+     minimum_pair = util.get_first_minimum_value(file_tags_count_dictionary)
+     file_tags_count = minimum_pair[1]
+     # check the condition and also return file_tags_count
+-    return util.greater_than_equal_exacted(file_tags_count, expected_count, exact), file_tags_count_dictionary
++    return (
++        util.greater_than_equal_exacted(file_tags_count, expected_count, exact),
++        file_tags_count_dictionary,
++    )
+
+
+diff of tests/checks/test_check_CountMarkdownTags.py:
+@@ -463,7 +463,7 @@ of GatorGrader. Depending on your goals, there are several different..."""
+             provided_count,
+             "--tag",
+             "heading",
+-            "--exact"
++            "--exact",
+         ]
+         parsed_arguments, remaining_arguments = arguments.parse(commandline_arguments)
+         args_verified = arguments.verify(parsed_arguments)
+
+
+diff of tests/test_invoke.py:
+@@ -241,7 +241,9 @@ def test_file_exists_in_directory_check_total_words_exact(
+ 
+ # pylint: disable=unused-argument
+ # pylint: disable=redefined-outer-name
+-def test_file_exists_in_directory_check_words_wildcards(reset_results_dictionary, tmpdir):
++def test_file_exists_in_directory_check_words_wildcards(
++    reset_results_dictionary, tmpdir
++):
+     """Check that the checking of words works correctly."""
+     reflection_file = tmpdir.mkdir("sub").join("reflection.md")
+     reflection_file.write(
+
+
+diff of tests/test_markdown.py:
+@@ -87,25 +87,37 @@ With more `code blocks` and maybe an ![Image](www.example.com)."""
+     directory = tmpdir.dirname + "/" + tmpdir.basename + "/" + "subdirectory"
+     hello_file = "Hello.md"
+ 
+-    (exceeds_threshold, actual_count), count_dictionary = markdown.specified_tag_greater_than_count(
++    (
++        exceeds_threshold,
++        actual_count,
++    ), count_dictionary = markdown.specified_tag_greater_than_count(
+         "code", markdown.count_specified_tag, 3, hello_file, directory
+     )
+     assert actual_count == 2
+     assert exceeds_threshold is False
+ 
+-    (exceeds_threshold, actual_count), count_dictionary = markdown.specified_tag_greater_than_count(
++    (
++        exceeds_threshold,
++        actual_count,
++    ), count_dictionary = markdown.specified_tag_greater_than_count(
+         "code", markdown.count_specified_tag, 1, hello_file, directory, False
+     )
+     assert actual_count == 2
+     assert exceeds_threshold is True
+ 
+-    (exactly, actual_count), count_dictionary = markdown.specified_tag_greater_than_count(
++    (
++        exactly,
++        actual_count,
++    ), count_dictionary = markdown.specified_tag_greater_than_count(
+         "code", markdown.count_specified_tag, 1, hello_file, directory, True
+     )
+     assert actual_count == 2
+     assert exactly is False
+ 
+-    (exactly, actual_count), count_dictionary = markdown.specified_tag_greater_than_count(
++    (
++        exactly,
++        actual_count,
++    ), count_dictionary = markdown.specified_tag_greater_than_count(
+         "code", markdown.count_specified_tag, 2, hello_file, directory, True
+     )
+     assert actual_count == 2
+@@ -131,25 +143,37 @@ With more `code blocks` and maybe an ![Image](www.example.com)."""
+     directory = tmpdir.dirname + "/" + tmpdir.basename + "/" + "subdirectory"
+     hello_file = "*.md"
+ 
+-    (exceeds_threshold, actual_count), count_dictionary = markdown.specified_tag_greater_than_count(
++    (
++        exceeds_threshold,
++        actual_count,
++    ), count_dictionary = markdown.specified_tag_greater_than_count(
+         "code", markdown.count_specified_tag, 3, hello_file, directory
+     )
+     assert actual_count == 2
+     assert exceeds_threshold is False
+ 
+-    (exceeds_threshold, actual_count), count_dictionary = markdown.specified_tag_greater_than_count(
++    (
++        exceeds_threshold,
++        actual_count,
++    ), count_dictionary = markdown.specified_tag_greater_than_count(
+         "code", markdown.count_specified_tag, 1, hello_file, directory, False
+     )
+     assert actual_count == 2
+     assert exceeds_threshold is True
+ 
+-    (exactly, actual_count), count_dictionary = markdown.specified_tag_greater_than_count(
++    (
++        exactly,
++        actual_count,
++    ), count_dictionary = markdown.specified_tag_greater_than_count(
+         "code", markdown.count_specified_tag, 1, hello_file, directory, True
+     )
+     assert actual_count == 2
+     assert exactly is False
+ 
+-    (exactly, actual_count), count_dictionary = markdown.specified_tag_greater_than_count(
++    (
++        exactly,
++        actual_count,
++    ), count_dictionary = markdown.specified_tag_greater_than_count(
+         "code", markdown.count_specified_tag, 2, hello_file, directory, True
+     )
+     assert actual_count == 2
+@@ -162,7 +186,10 @@ def test_count_fragments_from_empty_file(tmpdir):
+     assert len(tmpdir.listdir()) == 1
+     directory = tmpdir.dirname + "/" + tmpdir.basename + "/" + "subdirectory"
+     hello_file = "Hello.md"
+-    (exceeds_threshold, actual_count), count_dictionary = markdown.specified_tag_greater_than_count(
++    (
++        exceeds_threshold,
++        actual_count,
++    ), count_dictionary = markdown.specified_tag_greater_than_count(
+         "code", markdown.count_specified_tag, 3, hello_file, directory
+     )
+     assert actual_count == 0
+@@ -175,7 +202,10 @@ def test_count_fragments_from_empty_file_wildcard(tmpdir):
+     assert len(tmpdir.listdir()) == 1
+     directory = tmpdir.dirname + "/" + tmpdir.basename + "/" + "subdirectory"
+     hello_file = "*.md"
+-    (exceeds_threshold, actual_count), count_dictionary = markdown.specified_tag_greater_than_count(
++    (
++        exceeds_threshold,
++        actual_count,
++    ), count_dictionary = markdown.specified_tag_greater_than_count(
+         "code", markdown.count_specified_tag, 3, hello_file, directory
+     )
+     assert actual_count == 0
+@@ -188,7 +218,10 @@ def test_count_fragments_from_incorrect_file(tmpdir):
+     assert len(tmpdir.listdir()) == 1
+     directory = tmpdir.dirname + "/" + tmpdir.basename + "/" + "subdirectory"
+     hello_file = "HelloWrong.md"
+-    (exceeds_threshold, actual_count), count_dictionary = markdown.specified_tag_greater_than_count(
++    (
++        exceeds_threshold,
++        actual_count,
++    ), count_dictionary = markdown.specified_tag_greater_than_count(
+         "code", markdown.count_specified_tag, 3, hello_file, directory
+     )
+     assert actual_count == 0
+@@ -201,13 +234,19 @@ def test_count_fragments_from_incorrect_file_wildcard(tmpdir):
+     assert len(tmpdir.listdir()) == 1
+     directory = tmpdir.dirname + "/" + tmpdir.basename + "/" + "subdirectory"
+     hello_file = "Wrong*.md"
+-    (exceeds_threshold, actual_count), count_dictionary = markdown.specified_tag_greater_than_count(
++    (
++        exceeds_threshold,
++        actual_count,
++    ), count_dictionary = markdown.specified_tag_greater_than_count(
+         "code", markdown.count_specified_tag, 3, hello_file, directory
+     )
+     assert actual_count == 0
+     assert exceeds_threshold is False
+     hello_file = "Wrong*.*"
+-    (exceeds_threshold, actual_count), count_dictionary = markdown.specified_tag_greater_than_count(
++    (
++        exceeds_threshold,
++        actual_count,
++    ), count_dictionary = markdown.specified_tag_greater_than_count(
+         "code", markdown.count_specified_tag, 3, hello_file, directory
+     )
+     assert actual_count == 0
